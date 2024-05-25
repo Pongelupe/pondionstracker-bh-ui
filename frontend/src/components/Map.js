@@ -1,8 +1,24 @@
-import React, { useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import SocketClientContext from "../context/SocketClientContext";
 
 const Map = () => {
+  const { socketClient } = useContext(SocketClientContext);
+  const [positions, setPositions] = useState({});
+
+  useEffect(() => {
+    let subscription = socketClient.subscribe('/topic/bus', data => {
+      console.log(data.body);
+      setPositions(JSON.parse(data.body));
+    });
+
+    return () => {
+      if (subscription) {
+        subscription.unsubscribe();
+      }
+    };
+  },  [socketClient]);
+
 
 
   return (
@@ -16,6 +32,19 @@ const Map = () => {
           Praça Raul Soares
         </Popup>
       </Marker>
+      {
+
+       Object.entries(positions).map((obj, i) => {
+          return (
+
+            <Marker position={[obj[1][0].lat, obj[1][0].lon]}>
+              <Popup>
+                {i}--{obj[1][0].vehicleId}:{obj[1][0].data}
+              </Popup>
+            </Marker>
+          );
+        })
+      }
     </MapContainer>
   );
 }
