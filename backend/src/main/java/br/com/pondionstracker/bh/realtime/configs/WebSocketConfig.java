@@ -24,7 +24,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
 		registry.addEndpoint("/pbh-onibus-websocket")
 			.setAllowedOrigins("http://localhost:3000")
-			.withSockJS();
+//			.withSockJS()
+			;
 	}
 	
 	@Bean
