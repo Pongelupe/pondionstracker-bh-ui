@@ -1,5 +1,7 @@
 package br.com.pondionstracker.bh.realtime.models;
 
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,5 +18,9 @@ public class BusEntryCoord {
 	private String lon;
 
 	private String vehicleId;
+	
+	private String descricao;
+	
+	private LocalDateTime data;
 	
 }

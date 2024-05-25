@@ -20,6 +20,11 @@ const Map = () => {
   },  [socketClient]);
 
 
+      //<Marker position={[-19.922859, -43.945156]}>
+        //<Popup>
+          //Praça Raul Soares
+        //</Popup>
+      //</Marker>
 
   return (
     <MapContainer center={[-19.922859, -43.945156]} zoom={15} scrollWheelZoom={true}>
@@ -27,11 +32,6 @@ const Map = () => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap<a/> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Marker position={[-19.922859, -43.945156]}>
-        <Popup>
-          Praça Raul Soares
-        </Popup>
-      </Marker>
       {
 
        Object.entries(positions).map((obj, i) => {
@@ -39,7 +39,7 @@ const Map = () => {
 
             <Marker position={[obj[1][0].lat, obj[1][0].lon]}>
               <Popup>
-                {i}--{obj[1][0].vehicleId}:{obj[1][0].data}
+                {obj[1][0].descricao}:{obj[1][0].data}
               </Popup>
             </Marker>
           );
