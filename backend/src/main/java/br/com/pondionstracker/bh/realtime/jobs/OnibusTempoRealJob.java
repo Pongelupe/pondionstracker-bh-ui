@@ -36,7 +36,8 @@ public class OnibusTempoRealJob {
 		log.info("Buscou {} registros", dados.size());
 		var entries = dados
 				.stream()
-				.map(e -> prepareDescricao(e.getNv(), e))
+				.filter(e -> e.getNl() != null)
+				.map(e -> prepareDescricao(e.getNl(), e))
 				.filter(Optional<Onibus>::isPresent)
 				.map(Optional<Onibus>::get)
 				.map(e -> {
@@ -55,9 +56,9 @@ public class OnibusTempoRealJob {
 		simpleMessagingTemplate.convertAndSend("/topic/bus", entries);
 	}
 
-	private Optional<Onibus> prepareDescricao(String nv, RealTimeEntry entry) {
-		return busLineRepository.findById(Integer.parseInt(nv))
-				.map(e -> new Onibus(nv, e.getCodigoLinha() + " - " + e.getDescricaoLinha(), entry));
+	private Optional<Onibus> prepareDescricao(String nl, RealTimeEntry entry) {
+		return busLineRepository.findById(Integer.parseInt(nl))
+				.map(e -> new Onibus(nl, e.getCodigoLinha() + " - " + e.getDescricaoLinha(), entry));
 	}
 	
 }
