@@ -29,7 +29,7 @@ public class OnibusTempoRealJob {
 	
 	private final record Onibus(String nv, String descricao, RealTimeEntry e) {}
 	
-	@Scheduled(fixedRate = 25000)
+	@Scheduled(fixedRate = 10000)
 	public void sendMessage() {
 		var formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 		var dados = pbhClient.getDadosTempoReal();
