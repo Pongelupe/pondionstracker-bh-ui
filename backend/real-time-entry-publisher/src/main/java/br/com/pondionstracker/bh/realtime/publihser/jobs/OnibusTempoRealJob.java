@@ -1,4 +1,4 @@
-package br.com.pondionstracker.bh.realtime.jobs;
+package br.com.pondionstracker.bh.realtime.publihser.jobs;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -9,10 +9,10 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import br.com.pondionstracker.bh.realtime.clients.PBHClient;
-import br.com.pondionstracker.bh.realtime.models.BusEntryCoord;
-import br.com.pondionstracker.bh.realtime.models.RealTimeEntry;
-import br.com.pondionstracker.bh.realtime.repository.BusLineRepository;
+import br.com.pondionstracker.bh.realtime.publihser.clients.PBHClient;
+import br.com.pondionstracker.bh.realtime.publihser.models.BusEntryCoord;
+import br.com.pondionstracker.bh.realtime.publihser.models.RealTimeEntry;
+import br.com.pondionstracker.bh.realtime.publihser.repository.BusLineRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,7 +29,7 @@ public class OnibusTempoRealJob {
 	
 	private final record Onibus(String nv, String descricao, RealTimeEntry e) {}
 	
-	@Scheduled(fixedRate = 10000)
+//	@Scheduled(fixedRate = 10000)
 	public void sendMessage() {
 		var formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 		var dados = pbhClient.getDadosTempoReal();

@@ -1,4 +1,4 @@
-package br.com.pondionstracker.bh.realtime.configs;
+package br.com.pondionstracker.bh.realtime.publihser.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

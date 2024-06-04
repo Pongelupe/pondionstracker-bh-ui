@@ -1,4 +1,4 @@
-package br.com.pondionstracker.bh.realtime.models;
+package br.com.pondionstracker.bh.realtime.publihser.models;
 
 import java.time.LocalDateTime;
 
