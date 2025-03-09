@@ -2,6 +2,7 @@ package br.com.pondionstracker.bh.realtime.jobs;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -11,8 +12,8 @@ import org.springframework.stereotype.Service;
 
 import br.com.pondionstracker.bh.realtime.clients.PBHClient;
 import br.com.pondionstracker.bh.realtime.models.BusEntryCoord;
+import br.com.pondionstracker.bh.realtime.models.BusLine;
 import br.com.pondionstracker.bh.realtime.models.RealTimeEntry;
-import br.com.pondionstracker.bh.realtime.repository.BusLineRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,11 +26,11 @@ public class OnibusTempoRealJob {
 	
 	private final SimpMessagingTemplate simpleMessagingTemplate;
 	
-	private final BusLineRepository busLineRepository;
+	private final Map<Integer, BusLine> busLineMap;
 	
 	private final record Onibus(String nv, String descricao, RealTimeEntry e) {}
 	
-	@Scheduled(fixedRate = 25000)
+	@Scheduled(fixedRate = 10000)
 	public void sendMessage() {
 		var formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 		var dados = pbhClient.getDadosTempoReal();
@@ -57,7 +58,7 @@ public class OnibusTempoRealJob {
 	}
 
 	private Optional<Onibus> prepareDescricao(String nl, RealTimeEntry entry) {
-		return busLineRepository.findById(Integer.parseInt(nl))
+		return Optional.ofNullable(busLineMap.get(Integer.parseInt(nl)))
 				.map(e -> new Onibus(nl, e.getCodigoLinha() + " - " + e.getDescricaoLinha(), entry));
 	}
 	
