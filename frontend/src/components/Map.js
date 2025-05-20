@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import Onibus from "./Onibus";
 import User from "./User";
 import SocketClientContext from "../context/SocketClientContext";
 
@@ -28,17 +29,8 @@ const Map = () => {
       />
       <User />
       {
-
-       Object.entries(positions).map((obj, i) => {
-          return (
-
-            <Marker position={[obj[1][0].lat, obj[1][0].lon]}>
-              <Popup>
-                {obj[1][0].descricao}:{obj[1][0].data}
-              </Popup>
-            </Marker>
-          );
-        })
+       Object.entries(positions)
+          .map((obj, i) => <Onibus obj={obj} key={i}/>)
       }
     </MapContainer>
   );
